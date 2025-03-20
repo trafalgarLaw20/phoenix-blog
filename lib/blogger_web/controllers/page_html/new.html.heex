@@ -1,0 +1,16 @@
+<h1>Create a new article</h1>
+
+<.simple_form :let={f} for={@changeset} action={~p"/articles"} multipart>
+  <.input type="file" field={f[:upload]} label="Image" />
+  <.input type="text" field={f[:title]} label="Title" />
+  <.input type="textarea" field={f[:content]} label="Content" />
+  <.input
+    type="select"
+    field={f[:category_id]}
+    options={category_opts(@changeset)}
+    label="category"
+  />
+  <:actions>
+    <.button>Create</.button>
+  </:actions>
+</.simple_form>

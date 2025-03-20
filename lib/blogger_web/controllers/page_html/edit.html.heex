@@ -1,0 +1,24 @@
+<h1>Update article</h1>
+
+<.simple_form
+  :let={f}
+  for={@changeset}
+  action={~p"/articles/#{@article}"}
+  method="patch"
+  multipart
+>
+  <img :if={@article.image} src={"/uploads/#{@article.image}"} class="w-1/3" alt="Article Image" />
+  <.input type="file" field={f[:upload]} label="Image" />
+  <.input type="text" value={@article.title} field={f[:title]} label="Title" />
+  <.input type="textarea" value={@article.content} field={f[:content]} label="content" />
+  <.input
+    type="select"
+    field={f[:category_id]}
+    options={category_opts(@changeset)}
+    value={@article.category_id}
+    label="category"
+  />
+  <:actions>
+    <.button>Update</.button>
+  </:actions>
+</.simple_form>

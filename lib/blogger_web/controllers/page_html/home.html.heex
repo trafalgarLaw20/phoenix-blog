@@ -1,0 +1,27 @@
+<.link
+  :if={Pow.Plug.current_user(@conn)}
+  class="px-9 py-4 mb-4 font-bold bg-blue-400 rounded text-white"
+  href={~p"/articles/new"}
+>
+  Create a new article
+</.link>
+
+<h1 class="text-xl mt-7 font-bold">List Articles</h1>
+
+<div>
+  <ul :for={article <- Enum.reverse(@articles)}>
+    <div class="my-5 pl-2 py-2 border-2 border-cyan-200 rounded">
+      <a href={~p"/articles/#{article}"}>
+        <img src={"/uploads/#{article.image}"} alt={article.image} class="w-1/4" />
+      </a>
+      <.link navigate={~p"/articles/#{article}"} class="font-bold text-2xl text-red-600">
+        {article.title}
+      </.link>
+      <div class="flex">
+        <img src={~p"/images/message-circle-more.svg"} width="20" alt="" />
+        <p class="font-bold ml-2">{Enum.count(article.comments)}</p>
+      </div>
+      <p class="mt-3">{article.content}</p>
+    </div>
+  </ul>
+</div>

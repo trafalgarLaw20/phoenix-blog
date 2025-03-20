@@ -1,0 +1,62 @@
+<div class="link_block mb-4">
+  <.link
+    :if={Pow.Plug.current_user(@conn) && @article.user_id == Pow.Plug.current_user(@conn).id}
+    class="text-blue-400 font-bold"
+    href={~p"/articles/#{@article}/edit"}
+  >
+    Edit
+  </.link>
+  <.link
+    :if={Pow.Plug.current_user(@conn) && @article.user_id == Pow.Plug.current_user(@conn).id}
+    class="text-red-400 ml-2 font-bold"
+    href={~p"/articles/#{@article}"}
+    method="delete"
+  >
+    Delete
+  </.link>
+</div>
+<div class="details_article">
+  <img src={"/uploads/#{@article.image}"} alt={@article.image} class="mb-4" />
+
+  <h2 class="text-3xl mb-3 font-black">{@article.title}</h2>
+  <p>
+    {@article.content}
+  </p>
+</div>
+
+<div class="mt-8 text-xl font-bold">
+  Comments ({Enum.count(@article.comments)})
+</div>
+
+<.simple_form
+  :let={f}
+  :if={Pow.Plug.current_user(@conn)}
+  class="mb-6 mt-3"
+  for={@changeset}
+  action={~p"/articles/#{@article}/comments"}
+>
+  <.input type="textarea" field={f[:content]} />
+  <:actions>
+    <.button>Comment</.button>
+  </:actions>
+</.simple_form>
+
+<hr />
+
+<div>
+  <ul :for={comment <- Enum.reverse(@article.comments)}>
+    <div class="my-5 pl-2 py-2 border-2 border-cyan-200 rounded">
+      <li>
+        {comment.content}
+      </li>
+      <.link
+        :if={Pow.Plug.current_user(@conn) && comment.user_id == Pow.Plug.current_user(@conn).id}
+        class="text-red-400 font-bold"
+        method="delete"
+        href={~p"/articles/#{@article.id}/comments/#{comment.id}"}
+      >
+        Delete
+      </.link>
+    </div>
+  </ul>
+</div>
