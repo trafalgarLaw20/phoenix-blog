@@ -13,7 +13,7 @@
         Sign out
       </.link>
       <.link :if={is_nil(Pow.Plug.current_user(@conn))} navigate={~p"/registration/new"}>
-        Sign Up
+        Sign Up (registration)
       </.link>
       <.link :if={is_nil(Pow.Plug.current_user(@conn))} navigate={~p"/session/new"}>
         Sign In
