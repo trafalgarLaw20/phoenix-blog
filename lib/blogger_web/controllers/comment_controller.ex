@@ -8,8 +8,6 @@ defmodule BloggerWeb.CommentController do
       |> Map.put("user_id", Pow.Plug.current_user(conn).id)
       |> Map.put("article_id", id)
 
-    IO.inspect(comment_with_user_and_article)
-
     case Post.create_comment(comment_with_user_and_article) do
       {:ok, _comment} ->
         conn
